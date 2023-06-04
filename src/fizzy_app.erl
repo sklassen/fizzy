@@ -14,8 +14,8 @@ start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
             {'_', [
                 {"/", fizzy_home_handler, []},
-                {"/hello", fizzy_hello_handler, []},
-                {"/hello/:name", fizzy_hello_handler, []}
+                {"/hello", fizzy_hello_handler, #{okay=>none}},
+                {"/hello/:name", fizzy_hello_handler, #{okay=>ok}}
             ]}
     ]),
     {ok, _} = cowboy:start_clear(fizzy_http_listener,
