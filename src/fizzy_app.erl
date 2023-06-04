@@ -10,6 +10,7 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
+    Port = application:get_env(fizzy,port),
     Dispatch = cowboy_router:compile([
             {'_', [
                 {"/", fizzy_home_handler, []},
@@ -17,7 +18,7 @@ start(_StartType, _StartArgs) ->
             ]}
     ]),
     {ok, _} = cowboy:start_clear(fizzy_http_listener,
-        [{port, 8080}],
+        [{port, Port}],
         #{env => #{dispatch => Dispatch}
     }),
     fizzy_sup:start_link().
