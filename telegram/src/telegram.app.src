@@ -1,0 +1,19 @@
+%% Feel free to use, reuse and abuse the code in this file.
+
+{application, telegram, [
+	{description, "A gateway to telegram."},
+	{vsn, "1"},
+	{modules, []},
+	{registered, [telegram_sup]},
+	{applications, [
+		kernel,
+		stdlib,
+		compiler,
+		syntax_tools,
+		ssl,
+		jiffy,
+		inets
+	]},
+	{mod, {telegram_app, []}},
+	{env, []}
+]}.

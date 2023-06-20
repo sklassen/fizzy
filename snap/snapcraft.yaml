@@ -1,0 +1,39 @@
+name: fizzy
+version: 0.0.1
+type: app
+base: core20
+summary: engine
+description: |
+    A REST based tool
+architectures:
+  - build-on: amd64
+grade: stable
+confinement: strict
+
+parts:
+  fizy:
+    plugin: make
+    source-type: local
+    source: .
+    stage-packages:
+      - curl
+    stage:
+      - -usr/share/doc
+      - -usr/share/man
+      - -var
+
+#environment:
+#  ERL_FLAGS: -args_file ${SNAP_DATA}/etc/vm.args
+#  ERL_AFLAGS: -config ${SNAP_DATA}/etc/sys.config
+
+apps:
+  fizzy:
+    adapter: full
+    command: bin/fizzy
+    plugs: [network, network-bind]
+  server:
+    daemon: simple
+    adapter: full
+    command: bin/fizzy foreground
+    plugs: [network, network-bind]
+

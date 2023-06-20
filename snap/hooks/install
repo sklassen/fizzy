@@ -1,0 +1,13 @@
+#!/bin/sh
+
+mkdir -p ${SNAP_DATA}/etc
+mkdir -p ${SNAP_DATA}/logs
+
+if [ ! -s ${SNAP_DATA}/etc/vm.args ]; then
+   cp ${SNAP}/releases/0.0.1/vm.args ${SNAP_DATA}/etc/
+fi
+
+if [ ! -s ${SNAP_DATA}/etc/sys.config ]; then
+   cp ${SNAP}/releases/0.0.1/sys.config ${SNAP_DATA}/etc/
+fi
+
