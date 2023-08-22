@@ -1,6 +1,6 @@
 [{<<"cowboy">>,
   {git,"https://github.com/ninenines/cowboy",
-       {ref,"30ee75cea14c1fd63a46093cfb2bb9ad3f844f75"}},
+       {ref,"04ca4c5d31a92d4d3de087bbd7d6021dc4a6d409"}},
   0},
  {<<"cowlib">>,
   {git,"https://github.com/ninenines/cowlib",

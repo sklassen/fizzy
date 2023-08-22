@@ -15,7 +15,9 @@ start(_StartType, _StartArgs) ->
             {'_', [
                 {"/", fizzy_home_handler, []},
                 {"/hello", fizzy_hello_handler, #{okay=>none}},
-                {"/hello/:name", fizzy_hello_handler, #{okay=>ok}}
+                {"/hello/:name", fizzy_hello_handler, #{okay=>ok}},
+                {"/markowitz", fizzy_markowitz_handler, []},
+                {"/[...]", cowboy_static, {priv_dir, fizzy, <<"www">>,[{mimetypes, cow_mimetypes, all}]}}
             ]}
     ]),
     {ok, _} = cowboy:start_clear(fizzy_http_listener,
