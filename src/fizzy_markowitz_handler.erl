@@ -9,11 +9,15 @@ init(Req0, State) ->
     io:format("Got Markowitz Body~p~n",[Data]),
     #{mean:=Mean,
       vol:=Vol,
+      min:=Min,
+      max:=Max,
+      neff:=NEff,
+      nprtf:=NPrtf,
       corr:=Corr} = jason:decode(Data,[{mode, map}]),
 
     CoVar = markowitz:cor2cov(Vol,Corr),
 
-    Candidates = markowitz:candiates(Mean,CoVar),
+    Candidates = markowitz:frontier(Mean,CoVar,{Min,Max},{NEff,NPrtf}),
 
     io:format("Got Markowitz candidates ~p~n",[Candidates]),
     Marshall = [ #{ mean=>M, vol=>V, weights=>Wgts, labels=>Labels} || {M,V,Wgts,Labels} <- Candidates  ],
