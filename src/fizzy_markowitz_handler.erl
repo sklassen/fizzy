@@ -24,17 +24,17 @@ init(Req0, State) ->
     V0 = markowitz:variance(CoVar,User),
 
     io:format("Got Markowitz user ~p~n",[User]),
-    io:format("Got Markowitz mean ~p = ~p~n",[Mean,markowitz:mean(Mean,User)]),
-    io:format("Got Markowitz vol/corr ~p ~p~n",[Vol,Corr]),
-    io:format("Got Markowitz covar ~p = ~p~n",[CoVar,markowitz:variance(CoVar,User)]),
+    %io:format("Got Markowitz mean ~p = ~p~n",[Mean,markowitz:mean(Mean,User)]),
+    %io:format("Got Markowitz vol/corr ~p ~p~n",[Vol,Corr]),
+    %io:format("Got Markowitz covar ~p = ~p~n",[CoVar,markowitz:variance(CoVar,User)]),
 
-    io:format("Got Markowitz candidates ~p~n",[Candidates]),
+    %io:format("Got Markowitz candidates ~p~n",[Candidates]),
     Marshall = [ #{ mean=>M, vol=>V, weights=>Wgts, labels=>Labels} || {M,V,Wgts,Labels} <- lists:concat([Candidates,[{M0,V0,User,["user"]}]]) ],
 
-    io:format("Got Markowitz candidates ~p~n",[Marshall]),
+    %io:format("Got Markowitz candidates ~p~n",[Marshall]),
 
     X = jason:encode(#{candidates=>Marshall}),
-    io:format("Got Markowitz return ~p~n",[X]),
+    %io:format("Got Markowitz return ~p~n",[X]),
 
     Req = cowboy_req:reply(200, #{
         <<"content-type">> => <<"text/plain">>
