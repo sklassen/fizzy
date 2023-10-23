@@ -34,16 +34,15 @@ init(Req0, State) ->
     Chol = linalg:matmul(linalg:cholesky(Corr),linalg:diag(Vol)),
 
     TSDelta = linalg:matmul(Rand,Chol),
-    TSGamma = linalg:mul(lists:duplicate(NR,linalg:mul(0.5,Gamma)),linalg:mul(Delta,Delta),
+    TSGamma = linalg:mul(lists:duplicate(NR,linalg:mul(0.5,Gamma)),linalg:mul(TSDelta,TSDelta)),
     TSTheta = lists:duplicate(NR,Theta),
     TSGammaTheta = linalg:add(TSGamma,TSTheta),
 
-    TSrow = linalg:add(linalg:matmul(Rand,Chol),lists:duplicate(NR,Mean)),
-    TScol = linalg:transpose(TSrow),
+    TSrow = linalg:add(linalg:add(TSDelta,TSGammaTheta),lists:duplicate(NR,Mean)),
     io:format("Got corr ~p~n",[Corr]),
     io:format("Got chol ~p~n",[Chol]),
     io:format("Got data ~p~n",[TSrow]),
-    %io:format("Got sum ~p~n",[Tsum]),
+    io:format("Got sum ~p~n",[TSGammaTheta]),
 
     MeanF = markowitz_montecarlo:meanf(TSrow),
     CoVarF = markowitz_montecarlo:variancef(TSrow),
@@ -70,9 +69,7 @@ init(Req0, State) ->
     X = jason:encode(#{candidates=>Marshall}),
     %io:format("Got Markowitz return ~p~n",[X]),
 
-    Req = cowboy_req:reply(200, #{
-        <<"content-type">> => <<"text/plain">>
-    }, X, Req0),
+    Req = cowboy_req:reply(200, #{ <<"content-type">> => <<"text/plain">> }, X, Req0),
     {ok, Req, State}.
 
 random(N,Seed)->

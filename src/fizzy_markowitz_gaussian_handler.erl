@@ -20,8 +20,8 @@ init(Req0, State) ->
 
     Candidates = markowitz_gaussian:frontier(Mean,CoVar,{Min,Max},{NEff,NPrtf}),
 
-    M0 = markowitz_guassian:mean(Mean,User),
-    V0 = markowitz_guassian:variance(CoVar,User),
+    M0 = markowitz_gaussian:mean(Mean,User),
+    V0 = markowitz_gaussian:variance(CoVar,User),
 
     io:format("Got Markowitz user ~p~n",[User]),
     %io:format("Got Markowitz mean ~p = ~p~n",[Mean,markowitz:mean(Mean,User)]),
