@@ -41,8 +41,8 @@ init(Req0, State) ->
     TSrow = linalg:add(linalg:add(TSDelta,TSGammaTheta),lists:duplicate(NR,Mean)),
     io:format("Got corr ~p~n",[Corr]),
     io:format("Got chol ~p~n",[Chol]),
-    io:format("Got data ~p~n",[TSrow]),
-    io:format("Got sum ~p~n",[TSGammaTheta]),
+    %io:format("Got data ~p~n",[TSrow]),
+    %io:format("Got sum ~p~n",[TSGammaTheta]),
 
     MeanF = markowitz_montecarlo:meanf(TSrow),
     CoVarF = markowitz_montecarlo:variancef(TSrow),
@@ -51,7 +51,7 @@ init(Req0, State) ->
 
     CoVar = linalg:matmul(Corr,linalg:diag(linalg:mul(Vol,Vol))),
 
-    Candidates = markowitz_montecarlo:frontier({Mean,MeanF},{CoVar,CoVarF},{Min,Max},{NEff,NPrtf}),
+    Candidates = markowitz_montecarlo:frontier(MeanF,CoVarF,{Min,Max},{NEff,NPrtf}),
 
     M0 = MeanF(User),
     V0 = CoVarF(User),
