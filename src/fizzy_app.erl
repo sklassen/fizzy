@@ -16,8 +16,11 @@ start(_StartType, _StartArgs) ->
                 {"/", fizzy_home_handler, []},
                 {"/hello", fizzy_hello_handler, #{okay=>none}},
                 {"/hello/:name", fizzy_hello_handler, #{okay=>ok}},
+                {"/fizzy/markowitz/gaussian", fizzy_markowitz_gaussian_handler, []},
+                {"/fizzy/markowitz/montecarlo", fizzy_markowitz_montecarlo_handler, []},
                 {"/markowitz/gaussian", fizzy_markowitz_gaussian_handler, []},
                 {"/markowitz/montecarlo", fizzy_markowitz_montecarlo_handler, []},
+                {"/markowitz/brute", fizzy_markowitz_brute_handler, []},
                 {"/[...]", cowboy_static, {priv_dir, fizzy, <<"www">>,[{mimetypes, cow_mimetypes, all}]}}
             ]}
     ]),
