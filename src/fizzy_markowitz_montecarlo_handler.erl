@@ -8,6 +8,7 @@ init(Req0, State) ->
     {ok, Data, Req1} = cowboy_req:read_body(Req0),
     io:format("Got Markowitz Monte Body~p~n",[Data]),
     #{user:=User,
+      user1:=User1,
       mean:=Mean,
       vol:=Vol,
       prem:=Prem,
@@ -56,13 +57,18 @@ init(Req0, State) ->
     M0 = MeanF(User),
     V0 = CoVarF(User),
 
+    M1 = MeanF(User1),
+    V1 = CoVarF(User1),
+
+
     io:format("Got Markowitz user ~p~n",[User]),
+    io:format("Got Markowitz user1 ~p~n",[User1]),
     %io:format("Got Markowitz mean ~p = ~p~n",[Mean,markowitz:mean(Mean,User)]),
     %io:format("Got Markowitz vol/corr ~p ~p~n",[Vol,Corr]),
     %io:format("Got Markowitz covar ~p = ~p~n",[CoVar,markowitz:variance(CoVar,User)]),
 
     %io:format("Got Markowitz candidates ~p~n",[Candidates]),
-    Marshall = [ #{ mean=>M, vol=>V, weights=>Wgts, labels=>Labels} || {M,V,Wgts,Labels} <- lists:concat([Candidates,[{M0,V0,User,["user"]}]]) ],
+    Marshall = [ #{ mean=>M, vol=>V, weights=>Wgts, labels=>Labels} || {M,V,Wgts,Labels} <- lists:concat([Candidates,[{M0,V0,User,["user"]},{M1,V1,User1,["user"]}]]) ],
 
     %io:format("Got Markowitz candidates ~p~n",[Marshall]),
 
